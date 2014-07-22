@@ -1,16 +1,3 @@
-$(document).ready(function() {
-  var word;
-
-  $("#word-form").submit(function(event) {
-  	event.preventDefault();
-
-  	word = $("#word-input").val();	  
- 
-    $("#word-form").val("");
-  });
-
-});
-
 var pigLatin = function(word) {
 	var consonant = 'bcdfghjklmnpqrstvwxyz';
 	var vowel = 'aeiou';
@@ -18,18 +5,20 @@ var pigLatin = function(word) {
 	
 
 	if(vowel.indexOf(word[0]) > -1) {
-		$("div#results").append("<p>" + word + 'ay' + "</p>");
+		return word + 'ay';
 
 	} else {
-		for (var i=0; consonant.indexOf(word[i]) > -1; i++) {
+		
+	for (var i=0; consonant.indexOf(word[i]) > -1; i++) {
 			
-			if((word[i] === 'q') && (word[i+1] === 'u')) {
+		if((word[i] === 'q') && (word[i+1] === 'u')) {
 			return word.substring(i+2) + firstLetter.join("") + "quay";
-			
 		} 
 			firstLetter.push(word[i]);
 		}
-	} return word.substring(i) + firstLetter.join("") + 'ay'; 
+	}
+	return word.substring(i) + firstLetter.join("") + 'ay'; 
+
 };
 
 var pigLatinPhrase = function(word) {
@@ -44,3 +33,17 @@ english.forEach(function(word) {
 return baconWords.join(" ");
   
 };
+
+$(document).ready(function() {
+  var word;
+
+  $("#word-form").submit(function(event) {
+  	event.preventDefault();
+  	word = $("input#word-input").val();
+  	$("div#results p").text(pigLatinPhrase(word));	  
+
+    $("#word-input").val("");
+  });
+
+});
+
